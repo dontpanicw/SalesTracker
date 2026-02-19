@@ -1,7 +1,4 @@
-# 📊 Сервис аналитики финансов
-
-![Tests](https://github.com/yourusername/analytics-service/workflows/Tests/badge.svg)
-[![Go Report Card](https://goreportcard.com/badge/github.com/yourusername/analytics-service)](https://goreportcard.com/report/github.com/yourusername/analytics-service)
+# Сервис аналитики финансов
 
 Сервис для учета финансовых транзакций с расширенной аналитикой: сумма, среднее, медиана, перцентили.
 
@@ -151,13 +148,6 @@ CREATE TABLE items (
     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 ```
-
-### Индексы для оптимизации
-
-- `idx_items_date` - для быстрой фильтрации по датам
-- `idx_items_type` - для фильтрации по типу
-- `idx_items_category` - для фильтрации по категории
-- `idx_items_date_range` - для аналитических запросов
 
 ## Безопасность
 
