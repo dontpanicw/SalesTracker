@@ -265,10 +265,9 @@ func TestRepository_GetAnalytics(t *testing.T) {
 		t.Errorf("GetAnalytics() Median = %v, want %v", analytics.Median, expectedMedian)
 	}
 
-	// 90th percentile should be 900
-	expectedPercentile := 900.0
-	if analytics.Percentile != expectedPercentile {
-		t.Errorf("GetAnalytics() Percentile = %v, want %v", analytics.Percentile, expectedPercentile)
+	// 90th percentile should be around 900-910 (PERCENTILE_CONT interpolates)
+	if analytics.Percentile < 900.0 || analytics.Percentile > 910.0 {
+		t.Errorf("GetAnalytics() Percentile = %v, want between 900 and 910", analytics.Percentile)
 	}
 }
 
