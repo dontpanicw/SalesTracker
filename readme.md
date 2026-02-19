@@ -198,21 +198,26 @@ go tool cover -html=coverage.out
 
 ### Интеграционные тесты
 
-Для запуска интеграционных тестов PostgreSQL:
+Для запуска интеграционных тестов PostgreSQL нужна запущенная база данных:
 
 ```bash
-# Установить переменную окружения для тестовой БД
-export TEST_DATABASE_DSN="host=localhost port=5432 user=postgres password=postgres dbname=analytics_test sslmode=disable"
+# Вариант 1: Использовать Docker Compose
+docker-compose up -d postgres
 
-# Создать тестовую базу данных
-createdb analytics_test
+# Создать тестовую базу
+docker exec -it analytics-postgres createdb -U postgres analytics_test
 
 # Запустить интеграционные тесты
+export TEST_DATABASE_DSN="host=localhost port=5432 user=postgres password=postgres dbname=analytics_test sslmode=disable"
 go test -v ./internal/adapter/repository/postgres/
 
-# Удалить тестовую базу после тестов
-dropdb analytics_test
+# Вариант 2: Использовать локальный PostgreSQL
+createdb analytics_test
+export TEST_DATABASE_DSN="host=localhost port=5432 user=postgres password=postgres dbname=analytics_test sslmode=disable"
+go test -v ./internal/adapter/repository/postgres/
 ```
+
+**Примечание**: Если `TEST_DATABASE_DSN` не установлена, интеграционные тесты будут пропущены (SKIP). Это нормально для локальной разработки.
 
 ### Покрытие тестами
 
