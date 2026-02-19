@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аналитика финансов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Аналитика финансов</h1>
+        
+        <!-- Форма добавления записи -->
+        <div class="card">
+            <h2>Добавить запись</h2>
+            <form id="itemForm">
+                <div class="form-group">
+                    <label>Тип:</label>
+                    <select id="type" required>
+                        <option value="income">Доход</option>
+                        <option value="expense">Расход</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Сумма:</label>
+                    <input type="number" id="amount" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Категория:</label>
+                    <input type="text" id="category" required>
+                </div>
+                <div class="form-group">
+                    <label>Дата:</label>
+                    <input type="date" id="date" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </form>
+        </div>
+
+        <!-- Аналитика -->
+        <div class="card">
+            <h2>Аналитика за период</h2>
+            <div class="analytics-filters">
+                <input type="date" id="analyticsFrom" required>
+                <input type="date" id="analyticsTo" required>
+                <button onclick="loadAnalytics()" class="btn btn-secondary">Показать</button>
+            </div>
+            <div id="analyticsResult" class="analytics-grid"></div>
+        </div>
+
+        <!-- Таблица записей -->
+        <div class="card">
+            <h2>Все записи</h2>
+            <div class="filters">
+                <input type="date" id="filterFrom" placeholder="От">
+                <input type="date" id="filterTo" placeholder="До">
+                <button onclick="loadItems()" class="btn btn-secondary">Фильтр</button>
+                <button onclick="clearFilters()" class="btn btn-secondary">Сбросить</button>
+            </div>
+            <div class="table-container">
+                <table id="itemsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Тип</th>
+                            <th>Сумма</th>
+                            <th>Категория</th>
+                            <th>Дата</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно редактирования -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h2>Редактировать запись</h2>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label>Тип:</label>
+                    <select id="editType" required>
+                        <option value="income">Доход</option>
+                        <option value="expense">Расход</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Сумма:</label>
+                    <input type="number" id="editAmount" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Категория:</label>
+                    <input type="text" id="editCategory" required>
+                </div>
+                <div class="form-group">
+                    <label>Дата:</label>
+                    <input type="date" id="editDate" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
