@@ -1,9 +1,8 @@
 package main
 
 import (
+	"github.com/dontpanicw/SalesTracker/internal/app"
 	"log"
-
-	"github.com/yourusername/analytics-service/internal/app"
 )
 
 func main() {

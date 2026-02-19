@@ -2,9 +2,8 @@ package port
 
 import (
 	"context"
+	"github.com/dontpanicw/SalesTracker/internal/domain"
 	"time"
-
-	"github.com/yourusername/analytics-service/internal/domain"
 )
 
 // Repository определяет интерфейс для работы с хранилищем

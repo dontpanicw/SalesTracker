@@ -2,17 +2,17 @@ package http
 
 import (
 	"fmt"
+	"github.com/dontpanicw/SalesTracker/internal/port"
 	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
-	"github.com/yourusername/analytics-service/internal/port"
 )
 
 type Server struct {
-	router   *mux.Router
-	handler  *Handler
-	port     string
+	router  *mux.Router
+	handler *Handler
+	port    string
 }
 
 func NewServer(useCases port.UseCases, port string) *Server {
@@ -28,7 +28,7 @@ func NewServer(useCases port.UseCases, port string) *Server {
 func (s *Server) setupRoutes() {
 	// API routes
 	api := s.router.PathPrefix("/api").Subrouter()
-	
+
 	api.HandleFunc("/items", s.handler.CreateItem).Methods("POST")
 	api.HandleFunc("/items", s.handler.GetItems).Methods("GET")
 	api.HandleFunc("/items/{id}", s.handler.GetItem).Methods("GET")
@@ -49,7 +49,7 @@ func (s *Server) Start() error {
 	})
 
 	handler := c.Handler(s.router)
-	
+
 	fmt.Printf("Server starting on port %s\n", s.port)
 	return http.ListenAndServe(":"+s.port, handler)
 }

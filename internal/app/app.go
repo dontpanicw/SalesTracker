@@ -2,13 +2,13 @@ package app
 
 import (
 	"fmt"
+	"github.com/dontpanicw/SalesTracker/config"
+	"github.com/dontpanicw/SalesTracker/internal/adapter/repository/postgres"
+	"github.com/dontpanicw/SalesTracker/internal/usecases"
+	"github.com/dontpanicw/SalesTracker/pkg/migrations"
 	"log"
 
-	"github.com/yourusername/analytics-service/config"
-	"github.com/yourusername/analytics-service/internal/adapter/repository/postgres"
-	httpServer "github.com/yourusername/analytics-service/internal/input/http"
-	"github.com/yourusername/analytics-service/internal/usecases"
-	"github.com/yourusername/analytics-service/pkg/migrations"
+	httpServer "github.com/dontpanicw/SalesTracker/internal/input/http"
 )
 
 type App struct {
@@ -41,7 +41,7 @@ func (a *App) Run() error {
 
 	// Запуск HTTP сервера
 	server := httpServer.NewServer(uc, a.config.ServerPort)
-	
+
 	log.Printf("Starting server on port %s", a.config.ServerPort)
 	return server.Start()
 }

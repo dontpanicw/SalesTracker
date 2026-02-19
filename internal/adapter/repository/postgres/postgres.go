@@ -4,11 +4,11 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/dontpanicw/SalesTracker/internal/domain"
+	"github.com/dontpanicw/SalesTracker/internal/port"
 	"time"
 
 	_ "github.com/lib/pq"
-	"github.com/yourusername/analytics-service/internal/domain"
-	"github.com/yourusername/analytics-service/internal/port"
 )
 
 type repository struct {

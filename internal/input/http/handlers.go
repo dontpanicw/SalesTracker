@@ -2,13 +2,13 @@ package http
 
 import (
 	"encoding/json"
+	"github.com/dontpanicw/SalesTracker/internal/domain"
+	"github.com/dontpanicw/SalesTracker/internal/port"
 	"net/http"
 	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/yourusername/analytics-service/internal/domain"
-	"github.com/yourusername/analytics-service/internal/port"
 )
 
 type Handler struct {
@@ -36,7 +36,7 @@ func (h *Handler) CreateItem(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) GetItems(w http.ResponseWriter, r *http.Request) {
 	var from, to *time.Time
-	
+
 	if fromStr := r.URL.Query().Get("from"); fromStr != "" {
 		t, err := time.Parse(time.RFC3339, fromStr)
 		if err != nil {
@@ -45,7 +45,7 @@ func (h *Handler) GetItems(w http.ResponseWriter, r *http.Request) {
 		}
 		from = &t
 	}
-	
+
 	if toStr := r.URL.Query().Get("to"); toStr != "" {
 		t, err := time.Parse(time.RFC3339, toStr)
 		if err != nil {

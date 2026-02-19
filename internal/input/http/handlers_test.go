@@ -5,22 +5,22 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"github.com/dontpanicw/SalesTracker/internal/domain"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/yourusername/analytics-service/internal/domain"
 )
 
 type mockUseCases struct {
-	createItemFunc    func(ctx context.Context, item *domain.Item) error
-	getItemFunc       func(ctx context.Context, id int64) (*domain.Item, error)
-	getItemsFunc      func(ctx context.Context, from, to *time.Time) ([]*domain.Item, error)
-	updateItemFunc    func(ctx context.Context, item *domain.Item) error
-	deleteItemFunc    func(ctx context.Context, id int64) error
-	getAnalyticsFunc  func(ctx context.Context, from, to time.Time) (*domain.Analytics, error)
+	createItemFunc   func(ctx context.Context, item *domain.Item) error
+	getItemFunc      func(ctx context.Context, id int64) (*domain.Item, error)
+	getItemsFunc     func(ctx context.Context, from, to *time.Time) ([]*domain.Item, error)
+	updateItemFunc   func(ctx context.Context, item *domain.Item) error
+	deleteItemFunc   func(ctx context.Context, id int64) error
+	getAnalyticsFunc func(ctx context.Context, from, to time.Time) (*domain.Analytics, error)
 }
 
 func (m *mockUseCases) CreateItem(ctx context.Context, item *domain.Item) error {
@@ -114,7 +114,7 @@ func TestHandler_CreateItem(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			handler := NewHandler(tt.mock)
-			
+
 			body, _ := json.Marshal(tt.body)
 			req := httptest.NewRequest("POST", "/api/items", bytes.NewBuffer(body))
 			req.Header.Set("Content-Type", "application/json")
@@ -169,7 +169,7 @@ func TestHandler_GetItems(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			handler := NewHandler(tt.mock)
-			
+
 			req := httptest.NewRequest("GET", "/api/items"+tt.query, nil)
 			w := httptest.NewRecorder()
 
@@ -220,7 +220,7 @@ func TestHandler_GetItem(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			handler := NewHandler(tt.mock)
-			
+
 			req := httptest.NewRequest("GET", "/api/items/"+tt.id, nil)
 			req = mux.SetURLVars(req, map[string]string{"id": tt.id})
 			w := httptest.NewRecorder()
@@ -272,7 +272,7 @@ func TestHandler_DeleteItem(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			handler := NewHandler(tt.mock)
-			
+
 			req := httptest.NewRequest("DELETE", "/api/items/"+tt.id, nil)
 			req = mux.SetURLVars(req, map[string]string{"id": tt.id})
 			w := httptest.NewRecorder()
@@ -326,7 +326,7 @@ func TestHandler_GetAnalytics(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			handler := NewHandler(tt.mock)
-			
+
 			req := httptest.NewRequest("GET", "/api/analytics"+tt.query, nil)
 			w := httptest.NewRecorder()
 

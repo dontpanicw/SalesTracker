@@ -3,19 +3,18 @@ package usecases
 import (
 	"context"
 	"errors"
+	"github.com/dontpanicw/SalesTracker/internal/domain"
 	"testing"
 	"time"
-
-	"github.com/yourusername/analytics-service/internal/domain"
 )
 
 type mockRepository struct {
-	createFunc      func(ctx context.Context, item *domain.Item) error
-	getByIDFunc     func(ctx context.Context, id int64) (*domain.Item, error)
-	getAllFunc      func(ctx context.Context, from, to *time.Time) ([]*domain.Item, error)
-	updateFunc      func(ctx context.Context, item *domain.Item) error
-	deleteFunc      func(ctx context.Context, id int64) error
-	getAnalytics    func(ctx context.Context, from, to time.Time) (*domain.Analytics, error)
+	createFunc   func(ctx context.Context, item *domain.Item) error
+	getByIDFunc  func(ctx context.Context, id int64) (*domain.Item, error)
+	getAllFunc   func(ctx context.Context, from, to *time.Time) ([]*domain.Item, error)
+	updateFunc   func(ctx context.Context, item *domain.Item) error
+	deleteFunc   func(ctx context.Context, id int64) error
+	getAnalytics func(ctx context.Context, from, to time.Time) (*domain.Analytics, error)
 }
 
 func (m *mockRepository) Create(ctx context.Context, item *domain.Item) error {

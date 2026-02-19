@@ -2,10 +2,9 @@ package usecases
 
 import (
 	"context"
+	"github.com/dontpanicw/SalesTracker/internal/domain"
+	"github.com/dontpanicw/SalesTracker/internal/port"
 	"time"
-
-	"github.com/yourusername/analytics-service/internal/domain"
-	"github.com/yourusername/analytics-service/internal/port"
 )
 
 type useCases struct {

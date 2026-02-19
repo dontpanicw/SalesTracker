@@ -3,13 +3,12 @@ package postgres
 import (
 	"context"
 	"database/sql"
-	"fmt"
+	"github.com/dontpanicw/SalesTracker/internal/domain"
 	"os"
 	"testing"
 	"time"
 
 	_ "github.com/lib/pq"
-	"github.com/yourusername/analytics-service/internal/domain"
 )
 
 func setupTestDB(t *testing.T) (*sql.DB, func()) {
@@ -221,7 +220,7 @@ func TestRepository_GetAnalytics(t *testing.T) {
 	// Create test items
 	now := time.Now()
 	amounts := []float64{100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}
-	
+
 	for _, amount := range amounts {
 		item := &domain.Item{
 			Type:      "income",
@@ -237,7 +236,7 @@ func TestRepository_GetAnalytics(t *testing.T) {
 	// Get analytics
 	from := now.AddDate(0, 0, -1)
 	to := now.AddDate(0, 0, 1)
-	
+
 	analytics, err := repo.GetAnalytics(ctx, from, to)
 	if err != nil {
 		t.Fatalf("GetAnalytics() error = %v", err)
@@ -280,7 +279,7 @@ func TestRepository_GetAnalytics_EmptyData(t *testing.T) {
 	// Get analytics with no data
 	from := time.Now().AddDate(0, 0, -1)
 	to := time.Now()
-	
+
 	analytics, err := repo.GetAnalytics(ctx, from, to)
 	if err != nil {
 		t.Fatalf("GetAnalytics() error = %v", err)
@@ -291,5 +290,3 @@ func TestRepository_GetAnalytics_EmptyData(t *testing.T) {
 		t.Errorf("GetAnalytics() with empty data should return zeros, got %+v", analytics)
 	}
 }
-
-
